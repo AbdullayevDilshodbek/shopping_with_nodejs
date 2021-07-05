@@ -6,15 +6,9 @@ const bcrypt = require("bcrypt");
 module.exports.create = async (req,res) => {
     try {
         const {full_name,username,password} = req.body
-        const validatorSchema = {
-            full_name: Joi.string().required(),
-            username: Joi.string().required(),
-            password: Joi.required(),
-        }
-
-        const result = Joi.validate(req.body,validatorSchema);
-        if(result.error){
-            let message = result.error.details.map(err => err.message);
+        const validator = userValidator(req.body)
+        if(validator.error){
+            let message = validator.error.details.map(err => err.message);
             res.status(400).send(message)
         }
         let hashPassword = await bcrypt.hash(password.toString(), await bcrypt.genSalt(10))
@@ -26,6 +20,15 @@ module.exports.create = async (req,res) => {
             message: "Foydalanuvchi yaratildi"
         })
     } catch (error) {
-        res.status(400).json(error.message)
+        res.status(409).json(error.message)
     }
+}
+
+userValidator = (fields) => {
+    const validatorSchema = {
+        full_name: Joi.string().required(),
+        username: Joi.string().required(),
+        password: Joi.required(),
+    }
+    return Joi.validate(fields,validatorSchema);
 }
