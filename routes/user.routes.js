@@ -5,4 +5,5 @@ const router = express.Router()
 const auth = require('../middleware/auth')
 router.post('/',auth,user_controller.create)
 router.post('/login',auth_controller.login)
+router.get('/getAuthUser',auth,auth_controller.get_active_user)
 module.exports = router

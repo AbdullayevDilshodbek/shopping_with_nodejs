@@ -1,6 +1,7 @@
 const { User } = require('../models')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const _ = require('lodash')
 
 module.exports.login = async (req, res) => {
   const { username, password, client_secret } = req.body
@@ -28,11 +29,12 @@ module.exports.login = async (req, res) => {
   }
 }
 
+// auth userni olish
 module.exports.get_active_user = async (req, res) => {
   try {
     const user = await User.findByPk(req.user.user_id)
-    res.send(user)
+    res.send(_.pick(user,['id','username','full_name','is_client','active']))
   } catch (error) {
-    res.send('An error occured')
+    res.send(error.message)
   }
 }
