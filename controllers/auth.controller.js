@@ -33,7 +33,7 @@ module.exports.login = async (req, res) => {
 module.exports.get_active_user = async (req, res) => {
   try {
     const user = await User.findByPk(req.user.user_id)
-    res.send(_.pick(user,['id','username','full_name','is_client','active']))
+    res.send(_.pick(user,['id','username','full_name','active']))
   } catch (error) {
     res.send(error.message)
   }
