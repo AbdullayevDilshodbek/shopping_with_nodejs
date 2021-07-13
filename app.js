@@ -2,9 +2,9 @@ const express = require('express')
 const { sequelize } = require('./models')
 const dotenv = require('dotenv')
 const app = express()
-
+const cors = require('cors')
 app.use(express.json())
-
+app.use(cors())
 const user_routes = require('./routes/user.routes')
 
 app.use('/api/users', user_routes)

@@ -2,10 +2,7 @@
 const bcrypt = require('bcrypt')
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    /**
-     * Add seed commands here.
-     *
-     * Example: */
+   
     await queryInterface.bulkDelete("users", null, {
       truncate: true,
       cascade: true,
@@ -40,11 +37,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:*/
     await queryInterface.bulkDelete('users', null, {});
-
   }
 };

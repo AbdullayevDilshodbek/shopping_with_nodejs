@@ -45,7 +45,9 @@ module.exports.index = async (req, res) => {
     }
     try {
         const users = await User.findAll({
-            attributes: ['id','username','full_name','active']
+            attributes: {
+                exclude: ['password']
+              }
         })
         res.status(200).send({data: users})
     } catch (error) {
