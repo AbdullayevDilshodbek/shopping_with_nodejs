@@ -10,17 +10,9 @@ module.exports = {
       },
       user_id: {
         type: Sequelize.INTEGER,
-        // references: {
-        //   model: 'users',
-        //   key: 'id'
-        // }
       },
       rule_id: {
         type: Sequelize.INTEGER,
-        // references: {
-        //   model: 'rules',
-        //   key: 'id'
-        // }
       },
       createdAt: {
         allowNull: true,
@@ -30,6 +22,12 @@ module.exports = {
         allowNull: true,
         type: Sequelize.DATE
       }
+    },{
+      uniqueKeys: {
+        Items_unique: {
+            fields: ['user_id', 'rule_id']
+        }
+    }
     });
   },
   down: async (queryInterface, Sequelize) => {

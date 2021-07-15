@@ -5,10 +5,16 @@ module.exports = {
       truncate: true,
       cascade: true,
     });
-    await queryInterface.bulkInsert('user_rules', [{
+    await queryInterface.bulkInsert('user_rules', [
+      {
       user_id: 1,
-      rule_id: 1
-    }], {});
+      rule_id: 1 // user larni ko'rish
+      },
+      {
+      user_id: 1,
+      rule_id: 2 //rule ko'rish
+      },
+  ], {});
   },
 
   down: async (queryInterface, Sequelize) => {

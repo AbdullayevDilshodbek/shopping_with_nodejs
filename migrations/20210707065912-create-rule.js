@@ -13,17 +13,9 @@ module.exports = {
       },
       module_id: {
         type: Sequelize.INTEGER,
-        // references: {
-        //   model: 'modules',
-        //   key: 'id'
-        // }
       },
       action_id: {
         type: Sequelize.INTEGER,
-        // references: {
-        //   model: 'actions',
-        //   key: 'id'
-        // }
       },
       createdAt: {
         allowNull: true,

@@ -18,6 +18,13 @@ module.exports = {
         createdAt: '2021-07-07 14:14:49',
         updatedAt: '2021-07-07 14:14:49'
       },
+      {
+        title: 'Rule ko\'rish',
+        module_id: 2,
+        action_id: 1,
+        createdAt: '2021-07-07 14:14:49',
+        updatedAt: '2021-07-07 14:14:49'
+      },
     ], {});
   },
 

@@ -16,7 +16,7 @@ module.exports = {
         updatedAt: '2021-07-07 14:14:49'
       },
       {
-        title: 'products',
+        title: 'rules',
         createdAt: '2021-07-07 14:14:49',
         updatedAt: '2021-07-07 14:14:49'
       },
