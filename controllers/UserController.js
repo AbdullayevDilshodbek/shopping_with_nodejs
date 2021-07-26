@@ -4,9 +4,8 @@ const { Op, INTEGER } = require('sequelize')
 const _ = require('lodash')
 const bcrypt = require("bcrypt");
 const access = require('../middleware/rbac')
-
+const PG = require('../utils/paginate')
 const dotenv = require('dotenv').config()
-const os = require("os");
 
 module.exports.create = async (req, res) => {
     try {
@@ -52,32 +51,8 @@ module.exports.index = async (req, res) => {
                 exclude: ['password']
               }
         });
-        const page = req.query.page || 2
-        const limit = process.env.NODE_PG || 10
-
-        const startIndex = (page - 1) * limit
-        const endIndex = page * limit
-
-        const users_ = {}
-        const url = process.env.NODE_IS_HOST + req.headers.host
-        users_.data = users.slice(startIndex,endIndex)
-        const lastPage = Math.ceil(users.length/limit)
-        users_.links = {
-            first: `${url}/api/users?page=1`,
-            last: `${url}/api/users?page=${lastPage}`,
-            prev: page > 1 ? `${url}/api/users?page=${page - 1}` : null,
-            next: page < lastPage ? `${url}/api/users?page=${page + 1}` : null
-        }
-        users_.meta = {
-            currenct_page: page,
-            from: endIndex,
-            last_page: lastPage,
-            links: generateLinks(url,lastPage,page)
-        }
-        users_.path = `${url}/api/users`
-        users_.per_page = 1 * limit,
-        users_.total = users.length,
-        res.status(200).send(users_)
+        req.data = users
+        res.status(200).send(PG.paginate(req))
     } catch (error) {
         res.status(400).send(error.message)
     }
@@ -100,16 +75,4 @@ module.exports.attached_rule_to_user = async (req, res) => {
     } catch (error) {
         res.status(400).send(error.message)
     }
-}
-
-generateLinks = (url,maxPageNumber,activePage) => {
-    const links = [];
-        for (let i = 1; i <= maxPageNumber; i++) {
-            links.push({
-                url: `${url}/api/users?page=${i}`,
-                label: i,
-                active: i == activePage ? true : false
-            }) 
-        }
-    return links
 }
